@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --color-paper: #f6f8fa;
+  --color-ink: #182b27;
+  --color-muted: #62716e;
+  --color-line: #e1e8e5;
+  --color-card: #ffffff;
+  --color-pine: #17654d;
+  --color-pine-deep: #103f32;
+  --color-clay: #17654d;
+  --color-moss: #edf6f1;
+  --color-danger: #b42335;
+  --color-danger-soft: #fff0f1;
+  --color-warn: #8a5a12;
+  --radius-3xl: 1rem;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  body {
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  .font-display {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-pine);
+    outline-offset: 2px;
+  }
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  input:not([type="checkbox"]):not([type="file"]),
+  select,
+  textarea {
+    background-color: var(--color-card);
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-muted);
+    opacity: 0.85;
+  }
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: var(--color-muted);
+  }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--color-pine);
+  }
+  input[type="checkbox"] {
+    accent-color: var(--color-pine);
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+@utility shadow-card {
+  box-shadow: 0 2px 6px rgb(24 43 39 / 3%);
+}
+
+.crm-content h1 {
+  font-size: 1.875rem;
+  line-height: 1.25;
+}
+.crm-content h2 {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+.crm-content h3 {
+  font-size: 1.0625rem;
+}
+.crm-content :is(section, article, form, li).border.bg-card {
+  box-shadow: 0 2px 6px rgb(24 43 39 / 3%);
+}
+.crm-content form.border {
+  padding: 1.5rem;
+}
+.crm-content a.border.bg-card:hover {
+  border-color: var(--color-pine);
+  background-color: var(--color-moss);
+}
+.crm-content :is(input, select, textarea) {
+  font-size: 1rem;
+}
+.crm-content label {
+  font-weight: 500;
+}
+.crm-button:hover {
+  filter: brightness(0.94);
+}
+.crm-button:active {
+  filter: brightness(0.89);
+}
+.crm-nav-link:hover {
+  background: var(--color-paper);
+  color: var(--color-pine);
+}
+.crm-bottom-nav {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.crm-content {
+  overflow-wrap: anywhere;
+}
+.crm-content > div {
+  min-width: 0;
+}
+.crm-content .stat-value {
+  font-size: clamp(1.65rem, 2.5vw, 2.25rem);
+  line-height: 1.3;
+  letter-spacing: -0.045em;
+}
+@media (min-width: 768px) {
+  .crm-content :is(input, select, textarea) {
+    font-size: 0.875rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
