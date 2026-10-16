@@ -89,7 +89,7 @@ function Login() {
       <section className="hidden flex-col justify-between bg-pine-deep p-12 text-on-brand lg:flex">
         <Link to="/" className="flex items-center gap-3 font-display text-3xl">
           <QuatiMark className="size-11" />
-          quati.
+          Quati.
         </Link>
         <div>
           <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-on-brand/20 px-3 py-1 text-xs text-on-brand/85">

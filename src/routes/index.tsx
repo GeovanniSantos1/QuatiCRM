@@ -14,7 +14,7 @@ function Home() {
         <span className="flex items-center gap-3">
           <QuatiMark />
           <span className="font-display text-2xl">
-            quati<span className="text-pine">.</span>
+            Quati<span className="text-pine">.</span>
           </span>
         </span>
         <div className="flex items-center gap-3">

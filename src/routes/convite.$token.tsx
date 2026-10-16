@@ -46,7 +46,7 @@ function Invite() {
       <header className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
         <Link to="/" className="flex items-center gap-3">
           <QuatiMark />
-          <span className="font-display text-2xl">quati.</span>
+          <span className="font-display text-2xl">Quati.</span>
         </Link>
         <div className="flex items-center gap-3">
           <ThemeSelector compact />

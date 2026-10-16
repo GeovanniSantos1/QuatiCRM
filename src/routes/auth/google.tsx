@@ -59,7 +59,7 @@ function GoogleLogin() {
             to="/login"
             className="inline-flex min-h-11 items-center gap-3 font-display text-2xl text-pine"
           >
-            <QuatiMark className="size-10" /> quati.
+            <QuatiMark className="size-10" /> Quati.
           </Link>
           <ThemeSelector compact />
         </div>
