@@ -297,7 +297,7 @@ function Brand({ compact = false }: { compact?: boolean }) {
       {!compact && (
         <span>
           <span className="block font-display text-2xl leading-none text-ink">
-            quati<span className="text-pine">.</span>
+            Quati<span className="text-pine">.</span>
           </span>
           <span className="text-xs text-muted">Gestão condominial</span>
         </span>
