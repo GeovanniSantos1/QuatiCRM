@@ -1,6 +1,11 @@
 import { readFileSync } from "node:fs";
 
-const LOCAL_KEYS = ["DATABASE_URL", "GROK_PREVIEW_CLIENT_SECRET", "QUATI_SEED_TEST_USERS"];
+const LOCAL_KEYS = [
+  "DATABASE_URL",
+  "GROK_PREVIEW_CLIENT_SECRET",
+  "QUATI_SEED_TEST_USERS",
+  "CLERK_PUBLISHABLE_KEY",
+];
 
 /** Optional workstation settings. Hosting environment variables always win. */
 export function readLocalConfig() {
@@ -9,7 +14,10 @@ export function readLocalConfig() {
       readFileSync(new URL("../.quati/local-config.json", import.meta.url), "utf8"),
     );
     return Object.fromEntries(
-      LOCAL_KEYS.filter((key) => typeof values?.[key] === "string").map((key) => [key, values[key]]),
+      LOCAL_KEYS.filter((key) => typeof values?.[key] === "string").map((key) => [
+        key,
+        values[key],
+      ]),
     );
   } catch (error) {
     if (error.code === "ENOENT") return {};

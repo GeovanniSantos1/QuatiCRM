@@ -21,6 +21,7 @@ import { Route as PainelRouteImport } from './routes/painel'
 import { Route as ReservasRouteImport } from './routes/reservas'
 import { Route as VeiculosRouteImport } from './routes/veiculos'
 import { Route as AssinarTokenRouteImport } from './routes/assinar.$token'
+import { Route as AuthGoogleRouteImport } from './routes/auth/google'
 import { Route as ConviteTokenRouteImport } from './routes/convite.$token'
 import { Route as EnquetesIdRouteImport } from './routes/enquetes.$id'
 import { Route as EntregasIdRouteImport } from './routes/entregas.$id'
@@ -87,6 +88,11 @@ const AssinarTokenRoute = AssinarTokenRouteImport.update({
   path: '/assinar/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthGoogleRoute = AuthGoogleRouteImport.update({
+  id: '/auth/google',
+  path: '/auth/google',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConviteTokenRoute = ConviteTokenRouteImport.update({
   id: '/convite/$token',
   path: '/convite/$token',
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/reservas': typeof ReservasRoute
   '/veiculos': typeof VeiculosRoute
   '/assinar/$token': typeof AssinarTokenRoute
+  '/auth/google': typeof AuthGoogleRoute
   '/convite/$token': typeof ConviteTokenRoute
   '/enquetes/$id': typeof EnquetesIdRoute
   '/entregas/$id': typeof EntregasIdRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/reservas': typeof ReservasRoute
   '/veiculos': typeof VeiculosRoute
   '/assinar/$token': typeof AssinarTokenRoute
+  '/auth/google': typeof AuthGoogleRoute
   '/convite/$token': typeof ConviteTokenRoute
   '/enquetes/$id': typeof EnquetesIdRoute
   '/entregas/$id': typeof EntregasIdRoute
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/reservas': typeof ReservasRoute
   '/veiculos': typeof VeiculosRoute
   '/assinar/$token': typeof AssinarTokenRoute
+  '/auth/google': typeof AuthGoogleRoute
   '/convite/$token': typeof ConviteTokenRoute
   '/enquetes/$id': typeof EnquetesIdRoute
   '/entregas/$id': typeof EntregasIdRoute
@@ -186,6 +195,7 @@ export interface FileRouteTypes {
     | '/reservas'
     | '/veiculos'
     | '/assinar/$token'
+    | '/auth/google'
     | '/convite/$token'
     | '/enquetes/$id'
     | '/entregas/$id'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/reservas'
     | '/veiculos'
     | '/assinar/$token'
+    | '/auth/google'
     | '/convite/$token'
     | '/enquetes/$id'
     | '/entregas/$id'
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/reservas'
     | '/veiculos'
     | '/assinar/$token'
+    | '/auth/google'
     | '/convite/$token'
     | '/enquetes/$id'
     | '/entregas/$id'
@@ -244,6 +256,7 @@ export interface RootRouteChildren {
   ReservasRoute: typeof ReservasRoute
   VeiculosRoute: typeof VeiculosRoute
   AssinarTokenRoute: typeof AssinarTokenRoute
+  AuthGoogleRoute: typeof AuthGoogleRoute
   ConviteTokenRoute: typeof ConviteTokenRoute
   VotarTokenRoute: typeof VotarTokenRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -335,6 +348,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AssinarTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/google': {
+      id: '/auth/google'
+      path: '/auth/google'
+      fullPath: '/auth/google'
+      preLoaderRoute: typeof AuthGoogleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/convite/$token': {
       id: '/convite/$token'
       path: '/convite/$token'
@@ -410,6 +430,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReservasRoute: ReservasRoute,
   VeiculosRoute: VeiculosRoute,
   AssinarTokenRoute: AssinarTokenRoute,
+  AuthGoogleRoute: AuthGoogleRoute,
   ConviteTokenRoute: ConviteTokenRoute,
   VotarTokenRoute: VotarTokenRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,

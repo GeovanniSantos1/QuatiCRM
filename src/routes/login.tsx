@@ -25,7 +25,7 @@ function Login() {
   const { user, isPending } = useCurrentUserState();
   const router = useRouter();
   const search = Route.useSearch();
-  const { appClientConfigured } = Route.useLoaderData();
+  const { appClientConfigured, clerkPublishableKey } = Route.useLoaderData();
   const destination = search.convite ? `/convite/${search.convite}` : "/painel";
   const [mode, setMode] = useState<"in" | "up">(search.cadastro ? "up" : "in");
   const [name, setName] = useState("");
@@ -38,6 +38,16 @@ function Login() {
 
   async function submitSocial(providerId: string, label: string) {
     setError(null);
+    if (
+      providerId === "grok-google" &&
+      clerkPublishableKey &&
+      !window.location.hostname.endsWith(".grok-sandbox.com")
+    ) {
+      window.location.assign(
+        search.convite ? `/auth/google?convite=${search.convite}` : "/auth/google",
+      );
+      return;
+    }
     if (!appClientConfigured && !window.location.hostname.endsWith(".grok-sandbox.com")) {
       setError(
         `O login com ${label} ainda não está configurado para este endereço. Você pode entrar ou criar sua conta com e-mail e senha.`,
