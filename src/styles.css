@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
@@ -15,9 +17,32 @@
   --color-danger: #b42335;
   --color-danger-soft: #fff0f1;
   --color-warn: #8a5a12;
+  --color-on-accent: #ffffff;
+  --color-on-brand: #f4fff9;
+  --color-signature-paper: #ffffff;
+  --color-signature-ink: #17654d;
   --radius-3xl: 1rem;
 }
 
+:root {
+  color-scheme: light;
+}
+:root.dark {
+  color-scheme: dark;
+  --color-paper: #101a17;
+  --color-card: #192620;
+  --color-ink: #e8f1ed;
+  --color-muted: #acbfb5;
+  --color-line: #344b40;
+  --color-pine: #78d3af;
+  --color-clay: #78d3af;
+  --color-pine-deep: #103f32;
+  --color-moss: #203c30;
+  --color-danger: #ff9da9;
+  --color-danger-soft: #3b2229;
+  --color-warn: #f1c876;
+  --color-on-accent: #10291d;
+}
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;

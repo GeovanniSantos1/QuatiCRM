@@ -79,9 +79,9 @@ function Painel() {
       </div>
 
       {!data.sindicoName && (
-        <section className="rounded-3xl bg-pine p-5 text-paper">
+        <section className="rounded-3xl bg-pine p-5 text-on-accent">
           <h2 className="font-display text-3xl">O condomínio ainda não tem síndico.</h2>
-          <p className="mt-2 max-w-lg text-sm text-paper/80">
+          <p className="mt-2 max-w-lg text-sm text-on-accent/80">
             Quem assume define os níveis User, Porteiro, Admin e Síndico. Complete nome e unidade
             antes.
           </p>

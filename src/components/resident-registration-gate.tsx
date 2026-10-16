@@ -1,3 +1,4 @@
+import { ThemeSelector } from "@/components/theme-selector";
 import { useState, type FormEvent } from "react";
 import { Clock3, RefreshCw, ShieldCheck, UserRound, XCircle } from "lucide-react";
 import { UserButton } from "@/lib/auth/gates";
@@ -45,7 +46,10 @@ export function ResidentRegistrationGate({
           <QuatiMark />
           <span className="font-display text-2xl">quati.</span>
         </span>
-        <UserButton />
+        <div className="flex items-center gap-3">
+          <ThemeSelector compact />
+          <UserButton />
+        </div>
       </header>
       <section className="mx-auto mt-8 max-w-xl space-y-5">
         <div className="flex items-center gap-3">
@@ -144,7 +148,7 @@ export function ResidentRegistrationGate({
             <button
               type="submit"
               disabled={busy}
-              className={`${buttonClass} w-full bg-pine text-card`}
+              className={`${buttonClass} w-full bg-pine text-on-accent`}
             >
               {busy
                 ? "Enviando…"

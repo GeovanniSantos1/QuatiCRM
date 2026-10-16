@@ -1,3 +1,4 @@
+import { ThemeSelector } from "@/components/theme-selector";
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getPollByToken, voteByToken } from "@/lib/condo/api";
@@ -46,10 +47,15 @@ function VotePage() {
   return (
     <main className="min-h-screen bg-paper px-4 py-8 text-ink">
       <div className="mx-auto max-w-md">
+        <div className="mb-4 flex justify-end">
+          <ThemeSelector compact />
+        </div>
         <Link to="/" className="font-display text-2xl text-pine">
           Quati
         </Link>
-        <p className="mt-8 text-xs font-semibold tracking-wide text-muted uppercase">Enquete do condomínio</p>
+        <p className="mt-8 text-xs font-semibold tracking-wide text-muted uppercase">
+          Enquete do condomínio
+        </p>
         {!pack && !error && <div className="mt-4 h-40 animate-pulse rounded-3xl bg-line" />}
         {error && <p className="mt-4 text-sm text-danger">{error}</p>}
         {pack && (
@@ -66,7 +72,11 @@ function VotePage() {
                   return (
                     <li key={option.id}>
                       <div className="mb-1 flex justify-between text-sm">
-                        <span className={pack.myOptionId === option.id ? "font-semibold text-pine" : ""}>{option.label}</span>
+                        <span
+                          className={pack.myOptionId === option.id ? "font-semibold text-pine" : ""}
+                        >
+                          {option.label}
+                        </span>
                         <span className="tabular-nums text-muted">
                           {option.votes} · {width}%
                         </span>
@@ -77,17 +87,32 @@ function VotePage() {
                     </li>
                   );
                 })}
-                <p className="text-sm text-pine">{pack.voted ? "Voto registrado." : "Enquete encerrada."}</p>
+                <p className="text-sm text-pine">
+                  {pack.voted ? "Voto registrado." : "Enquete encerrada."}
+                </p>
               </ul>
             ) : (
               <form onSubmit={submit} className="mt-6 space-y-2">
                 {pack.options.map((option) => (
-                  <label key={option.id} className="flex min-h-12 items-center gap-3 rounded-2xl border border-line bg-card px-4">
-                    <input type="radio" name="option" value={option.id} checked={choice === option.id} onChange={() => setChoice(option.id)} />
+                  <label
+                    key={option.id}
+                    className="flex min-h-12 items-center gap-3 rounded-2xl border border-line bg-card px-4"
+                  >
+                    <input
+                      type="radio"
+                      name="option"
+                      value={option.id}
+                      checked={choice === option.id}
+                      onChange={() => setChoice(option.id)}
+                    />
                     <span>{option.label}</span>
                   </label>
                 ))}
-                <button type="submit" disabled={busy || !choice} className="min-h-12 w-full rounded-full bg-clay font-semibold text-paper disabled:opacity-50">
+                <button
+                  type="submit"
+                  disabled={busy || !choice}
+                  className="min-h-12 w-full rounded-full bg-clay font-semibold text-on-accent disabled:opacity-50"
+                >
                   {busy ? "Enviando…" : "Confirmar voto"}
                 </button>
               </form>

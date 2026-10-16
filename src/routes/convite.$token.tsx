@@ -1,3 +1,4 @@
+import { ThemeSelector } from "@/components/theme-selector";
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { ShieldCheck, UserRoundCheck } from "lucide-react";
@@ -47,7 +48,10 @@ function Invite() {
           <QuatiMark />
           <span className="font-display text-2xl">quati.</span>
         </Link>
-        {user && <UserButton />}
+        <div className="flex items-center gap-3">
+          <ThemeSelector compact />
+          {user && <UserButton />}
+        </div>
       </header>
       <section className="mx-auto mt-10 max-w-lg space-y-5 rounded-2xl border border-line bg-card p-6">
         <span className="grid size-12 place-items-center rounded-xl bg-moss text-pine">

@@ -1,3 +1,4 @@
+import { ThemeSelector } from "@/components/theme-selector";
 import { useState } from "react";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { GROK_PROVIDERS, authClient, signIn } from "@/lib/auth/client";
@@ -85,13 +86,13 @@ function Login() {
 
   return (
     <main className="grid min-h-screen bg-card lg:grid-cols-2">
-      <section className="hidden flex-col justify-between bg-pine-deep p-12 text-card lg:flex">
+      <section className="hidden flex-col justify-between bg-pine-deep p-12 text-on-brand lg:flex">
         <Link to="/" className="flex items-center gap-3 font-display text-3xl">
           <QuatiMark className="size-11" />
           quati.
         </Link>
         <div>
-          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-card/20 px-3 py-1 text-xs text-card/85">
+          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-on-brand/20 px-3 py-1 text-xs text-on-brand/85">
             <Building2 className="size-3.5" aria-hidden="true" /> Gestão condominial simplificada
           </span>
           <h1 className="max-w-lg font-display text-5xl leading-tight">
@@ -99,7 +100,7 @@ function Login() {
             <br />
             Mais tranquilidade.
           </h1>
-          <p className="mt-5 max-w-sm leading-relaxed text-card/75">
+          <p className="mt-5 max-w-sm leading-relaxed text-on-brand/75">
             Pessoas, entregas e decisões conectadas. Cuide do seu condomínio com tudo no mesmo
             lugar.
           </p>
@@ -109,8 +110,8 @@ function Login() {
               { icon: Vote, text: "Decisões com a participação de todos" },
               { icon: ShieldCheck, text: "Acesso de acordo com cada função" },
             ].map(({ icon: Icon, text }) => (
-              <p key={text} className="flex items-center gap-3 text-sm text-card/90">
-                <span className="grid size-9 place-items-center rounded-lg bg-card/10">
+              <p key={text} className="flex items-center gap-3 text-sm text-on-brand/90">
+                <span className="grid size-9 place-items-center rounded-lg bg-on-brand/10">
                   <Icon className="size-4" aria-hidden="true" />
                 </span>
                 {text}
@@ -118,19 +119,22 @@ function Login() {
             ))}
           </div>
         </div>
-        <p className="flex items-center gap-2 text-xs text-card/65">
+        <p className="flex items-center gap-2 text-xs text-on-brand/65">
           <CheckCircle2 className="size-4" aria-hidden="true" /> Uma gestão mais próxima de quem
           mora.
         </p>
       </section>
       <section className="flex items-center bg-paper px-5 py-10 sm:px-10">
         <div className="mx-auto w-full max-w-md">
-          <Link
-            to="/"
-            className="mb-8 inline-flex min-h-11 items-center gap-2 text-xs font-medium text-muted hover:text-pine"
-          >
-            <ArrowLeft className="size-4" aria-hidden="true" /> Voltar ao início
-          </Link>
+          <div className="mb-8 flex items-center justify-between gap-3">
+            <Link
+              to="/"
+              className="inline-flex min-h-11 items-center gap-2 text-xs font-medium text-muted hover:text-pine"
+            >
+              <ArrowLeft className="size-4" aria-hidden="true" /> Voltar ao início
+            </Link>
+            <ThemeSelector />
+          </div>
           <p className="text-xs font-bold tracking-widest text-pine uppercase">Condomínio Quati</p>
           <h2 className="mt-3 font-display text-3xl">
             {mode === "in" ? "Bem-vindo de volta" : "Crie sua conta"}

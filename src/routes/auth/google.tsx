@@ -1,3 +1,4 @@
+import { ThemeSelector } from "@/components/theme-selector";
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
@@ -26,23 +27,48 @@ export const Route = createFileRoute("/auth/google")({
   }),
 });
 
+const clerkAppearance = {
+  elements: {
+    rootBox: { width: "100%", minWidth: 0 },
+    cardBox: { width: "100%", maxWidth: "100%", minWidth: 0 },
+    card: { width: "100%", maxWidth: "100%", minWidth: 0 },
+  },
+  variables: {
+    colorPrimary: "var(--color-pine)",
+    colorPrimaryForeground: "var(--color-on-accent)",
+    colorBackground: "var(--color-card)",
+    colorForeground: "var(--color-ink)",
+    colorInput: "var(--color-paper)",
+    colorInputForeground: "var(--color-ink)",
+    colorMuted: "var(--color-paper)",
+    colorMutedForeground: "var(--color-muted)",
+    colorBorder: "var(--color-line)",
+    colorDanger: "var(--color-danger)",
+    colorRing: "var(--color-pine)",
+    fontFamily: "var(--font-sans)",
+  },
+};
+
 function GoogleLogin() {
   const { clerkPublishableKey } = Route.useLoaderData();
   return (
     <main className="grid min-h-screen place-items-center bg-paper p-5">
-      <section className="w-full max-w-md rounded-3xl border border-line bg-card p-6 sm:p-8">
-        <Link
-          to="/login"
-          className="mb-6 inline-flex min-h-11 items-center gap-3 font-display text-2xl text-pine"
-        >
-          <QuatiMark className="size-10" /> quati.
-        </Link>
+      <section className="min-w-0 w-full max-w-md rounded-3xl border border-line bg-card p-6 sm:p-8">
+        <div className="mb-6 flex items-center justify-between gap-3">
+          <Link
+            to="/login"
+            className="inline-flex min-h-11 items-center gap-3 font-display text-2xl text-pine"
+          >
+            <QuatiMark className="size-10" /> quati.
+          </Link>
+          <ThemeSelector compact />
+        </div>
         <h1 className="font-display text-2xl">Entrar com Google</h1>
         <p className="mt-2 mb-6 text-sm text-muted">
           Acesse sua conta para continuar no condomínio.
         </p>
         {clerkPublishableKey ? (
-          <ClerkProvider publishableKey={clerkPublishableKey}>
+          <ClerkProvider publishableKey={clerkPublishableKey} appearance={clerkAppearance}>
             <GoogleFlow />
           </ClerkProvider>
         ) : (

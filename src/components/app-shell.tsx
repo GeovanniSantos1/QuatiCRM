@@ -1,3 +1,4 @@
+import { ThemeSelector } from "@/components/theme-selector";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
@@ -54,8 +55,8 @@ const links = [
 
 export const btn =
   "crm-button inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 text-sm font-semibold disabled:opacity-50";
-export const btnClay = `${btn} bg-clay text-paper`;
-export const btnPine = `${btn} bg-pine text-paper`;
+export const btnClay = `${btn} bg-clay text-on-accent`;
+export const btnPine = `${btn} bg-pine text-on-accent`;
 export const btnGhost = `${btn} border border-line bg-card text-ink`;
 export const field = "w-full min-h-11 rounded-xl border border-line bg-card px-3 text-sm text-ink";
 
@@ -133,7 +134,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="min-h-screen bg-paper text-ink">
         <a
           href="#conteudo"
-          className="sr-only z-50 rounded-lg bg-pine p-3 text-card focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+          className="sr-only z-50 rounded-lg bg-pine p-3 text-on-accent focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
         >
           Pular para o conteúdo
         </a>
@@ -170,15 +171,15 @@ export function AppShell({ children }: { children: ReactNode }) {
               );
             })}
           </nav>
-          <div className="rounded-xl bg-pine-deep p-4 text-card">
-            <Building2 className="mb-3 size-5 text-card/80" aria-hidden="true" />
+          <div className="rounded-xl bg-pine-deep p-4 text-on-brand">
+            <Building2 className="mb-3 size-5 text-on-brand/80" aria-hidden="true" />
             <p className="text-sm font-semibold">Tudo começa com pessoas.</p>
-            <p className="mt-1 text-xs leading-relaxed text-card/75">
+            <p className="mt-1 text-xs leading-relaxed text-on-brand/75">
               Mantenha os contatos do condomínio sempre atualizados.
             </p>
             <Link
               to="/moradores"
-              className="mt-3 flex min-h-11 items-center justify-between text-xs font-semibold text-card"
+              className="mt-3 flex min-h-11 items-center justify-between text-xs font-semibold text-on-brand"
             >
               Ver pessoas <ArrowUpRight className="size-4" aria-hidden="true" />
             </Link>
@@ -198,7 +199,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <span className="font-semibold text-ink">{current?.label || "Painel"}</span>
               </p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <ThemeSelector compact />
               {data && (
                 <span
                   title={ROLE_HINT[data.profile.role]}
@@ -215,7 +217,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               >
                 <Bell className="size-4" aria-hidden="true" />
                 {unread > 0 && (
-                  <span className="absolute -top-1 -right-1 grid size-5 place-items-center rounded-full bg-clay text-xs font-bold text-card">
+                  <span className="absolute -top-1 -right-1 grid size-5 place-items-center rounded-full bg-clay text-xs font-bold text-on-accent">
                     {unread}
                   </span>
                 )}

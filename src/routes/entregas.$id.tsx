@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell, Notice, btnClay, btnGhost, field, useQuati } from "@/components/app-shell";
 import { SignaturePad } from "@/components/signature-pad";
-import { cancelDelivery, getDelivery, markPickedUp, prepareDeliveryWhatsapp, signDelivery } from "@/lib/condo/api";
+import {
+  cancelDelivery,
+  getDelivery,
+  markPickedUp,
+  prepareDeliveryWhatsapp,
+  signDelivery,
+} from "@/lib/condo/api";
 import { canRegisterDelivery } from "@/lib/condo/roles";
 import { errorText, formatWhen } from "@/lib/condo/format";
 
@@ -68,7 +74,9 @@ function Detail({ id }: { id: string }) {
 
   return (
     <div className="space-y-5">
-      <Link to="/entregas" className="text-sm text-muted">← Entregas</Link>
+      <Link to="/entregas" className="text-sm text-muted">
+        ← Entregas
+      </Link>
       <div>
         <p className="text-xs font-semibold tracking-wide text-muted uppercase">{item.unit}</p>
         <h1 className="font-display text-4xl">{item.recipientName}</h1>
@@ -77,20 +85,32 @@ function Detail({ id }: { id: string }) {
         </p>
         <p className="mt-3">{item.description}</p>
       </div>
-      {item.photoData && <img src={item.photoData} alt="Foto da encomenda" className="max-h-72 rounded-3xl border border-line" />}
+      {item.photoData && (
+        <img
+          src={item.photoData}
+          alt="Foto da encomenda"
+          className="max-h-72 rounded-3xl border border-line"
+        />
+      )}
       {error && <Notice tone="bad">{error}</Notice>}
       {item.signatureData ? (
         <div className="rounded-3xl border border-line bg-card p-4">
           <p className="text-sm font-semibold">Assinado por {item.signerName}</p>
           <p className="text-xs text-muted">{formatWhen(item.signedAt)}</p>
-          <img src={item.signatureData} alt="Assinatura" className="mt-3 h-32 w-full object-contain" />
+          <img
+            src={item.signatureData}
+            alt="Assinatura"
+            className="mt-3 h-32 w-full rounded-lg bg-signature-paper object-contain"
+          />
         </div>
       ) : item.mine ? (
         <form onSubmit={sign} className="space-y-3 rounded-3xl border border-line bg-card p-4">
           <h2 className="font-display text-2xl">Assinar retirada</h2>
           <input className={field} value={name} onChange={(e) => setName(e.target.value)} />
           <SignaturePad onChange={setSignature} />
-          <button className={btnClay} disabled={busy} type="submit">{busy ? "Enviando…" : "Confirmar assinatura"}</button>
+          <button className={btnClay} disabled={busy} type="submit">
+            {busy ? "Enviando…" : "Confirmar assinatura"}
+          </button>
         </form>
       ) : (
         <p className="text-sm text-muted">Aguardando a assinatura do morador no celular.</p>
@@ -101,10 +121,13 @@ function Detail({ id }: { id: string }) {
             type="button"
             className={btnGhost}
             onClick={() => {
-              void prepareDeliveryWhatsapp({ data: { id, origin: window.location.origin } }).then((result) => {
-                if (result.whatsappUrl) window.open(result.whatsappUrl, "_blank", "noopener,noreferrer");
-                else setError("Morador sem telefone com DDD.");
-              });
+              void prepareDeliveryWhatsapp({ data: { id, origin: window.location.origin } }).then(
+                (result) => {
+                  if (result.whatsappUrl)
+                    window.open(result.whatsappUrl, "_blank", "noopener,noreferrer");
+                  else setError("Morador sem telefone com DDD.");
+                },
+              );
             }}
           >
             Abrir WhatsApp

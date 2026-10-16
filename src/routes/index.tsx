@@ -1,3 +1,4 @@
+import { ThemeSelector } from "@/components/theme-selector";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Building2, CheckCircle2, Package, PieChart, Vote } from "lucide-react";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
@@ -16,23 +17,26 @@ function Home() {
             quati<span className="text-pine">.</span>
           </span>
         </span>
-        {isPending ? (
-          <span className="h-11 w-28 animate-pulse rounded-full bg-line" />
-        ) : user ? (
-          <Link
-            to="/painel"
-            className="inline-flex min-h-11 items-center rounded-full bg-pine px-4 text-sm font-semibold text-paper"
-          >
-            Abrir painel
-          </Link>
-        ) : (
-          <Link
-            to="/login"
-            className="inline-flex min-h-11 items-center rounded-full bg-pine px-4 text-sm font-semibold text-paper"
-          >
-            Entrar
-          </Link>
-        )}
+        <div className="flex items-center gap-3">
+          <ThemeSelector compact />
+          {isPending ? (
+            <span className="h-11 w-28 animate-pulse rounded-full bg-line" />
+          ) : user ? (
+            <Link
+              to="/painel"
+              className="inline-flex min-h-11 items-center rounded-full bg-pine px-4 text-sm font-semibold text-on-accent"
+            >
+              Abrir painel
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="inline-flex min-h-11 items-center rounded-full bg-pine px-4 text-sm font-semibold text-on-accent"
+            >
+              Entrar
+            </Link>
+          )}
+        </div>
       </header>
 
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-12 md:grid-cols-2 md:py-20">
@@ -55,7 +59,7 @@ function Home() {
             ) : (
               <Link
                 to={user ? "/painel" : "/login"}
-                className="crm-button inline-flex min-h-12 items-center gap-3 rounded-lg bg-clay px-5 text-sm font-semibold text-card"
+                className="crm-button inline-flex min-h-12 items-center gap-3 rounded-lg bg-clay px-5 text-sm font-semibold text-on-accent"
               >
                 {user ? "Continuar" : "Entrar no condomínio"}
                 <ArrowRight className="size-4" aria-hidden="true" />

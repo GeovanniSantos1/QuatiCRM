@@ -1,10 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export function SignaturePad({
-  onChange,
-}: {
-  onChange: (dataUrl: string | null) => void;
-}) {
+export function SignaturePad({ onChange }: { onChange: (dataUrl: string | null) => void }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
   const dirty = useRef(false);
@@ -72,7 +68,7 @@ export function SignaturePad({
     <div>
       <canvas
         ref={ref}
-        className="h-44 w-full touch-none rounded-2xl border border-line bg-card text-pine"
+        className="h-44 w-full touch-none rounded-2xl border border-line bg-signature-paper text-signature-ink"
         onPointerDown={start}
         onPointerMove={move}
         onPointerUp={end}
