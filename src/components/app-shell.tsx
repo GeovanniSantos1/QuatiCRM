@@ -5,6 +5,9 @@ import {
   Bell,
   Building2,
   CarFront,
+  CalendarDays,
+  ClipboardList,
+  MoreHorizontal,
   ChevronRight,
   LayoutDashboard,
   Package,
@@ -42,6 +45,8 @@ const links = [
   { to: "/painel", label: "Visão geral", icon: LayoutDashboard },
   { to: "/entregas", label: "Entregas", icon: Package },
   { to: "/veiculos", label: "Veículos", icon: CarFront },
+  { to: "/chamados", label: "Chamados", icon: ClipboardList },
+  { to: "/reservas", label: "Reservas", icon: CalendarDays },
   { to: "/enquetes", label: "Enquetes", icon: Vote },
   { to: "/financeiro", label: "Financeiro", icon: PieChart },
   { to: "/moradores", label: "Pessoas", icon: Users },
@@ -132,7 +137,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         >
           Pular para o conteúdo
         </a>
-        <aside className="fixed inset-y-0 left-0 z-20 hidden w-64 flex-col border-r border-line bg-card px-5 py-7 md:flex">
+        <aside className="fixed inset-y-0 left-0 z-20 hidden w-64 flex-col overflow-y-auto border-r border-line bg-card px-5 py-7 md:flex">
           <Brand />
           <div className="mt-8 flex items-center gap-3 rounded-xl border border-line bg-paper p-3">
             <Building2
@@ -230,27 +235,53 @@ export function AppShell({ children }: { children: ReactNode }) {
 
         <nav
           aria-label="Navegação no celular"
-          className="crm-bottom-nav fixed inset-x-0 bottom-0 z-20 grid grid-cols-6 border-t border-line bg-card md:hidden"
+          className="crm-bottom-nav fixed inset-x-0 bottom-0 z-20 grid grid-cols-5 border-t border-line bg-card md:hidden"
         >
-          {links.map((link) => {
-            const active = pathname === link.to || pathname.startsWith(`${link.to}/`);
-            const Icon = link.icon;
-            return (
-              <Link
-                key={link.to}
-                to={link.to}
-                aria-current={active ? "page" : undefined}
-                className={`flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] font-medium ${active ? "text-pine" : "text-muted"}`}
-              >
-                <Icon className="size-5" aria-hidden="true" />
-                {link.to === "/painel"
-                  ? "Início"
-                  : link.to === "/financeiro"
-                    ? "Caixa"
-                    : link.label}
-              </Link>
-            );
-          })}
+          {links
+            .filter((link) => ["/painel", "/entregas", "/chamados", "/reservas"].includes(link.to))
+            .map((link) => {
+              const active = pathname === link.to || pathname.startsWith(`${link.to}/`);
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  aria-current={active ? "page" : undefined}
+                  className={`flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] font-medium ${active ? "text-pine" : "text-muted"}`}
+                >
+                  <Icon className="size-5" aria-hidden="true" />
+                  {link.to === "/painel"
+                    ? "Início"
+                    : link.to === "/financeiro"
+                      ? "Caixa"
+                      : link.label}
+                </Link>
+              );
+            })}
+          <details key={pathname} className="relative">
+            <summary
+              className={`flex min-h-16 cursor-pointer list-none flex-col items-center justify-center gap-1 text-xs font-medium ${["/veiculos", "/enquetes", "/financeiro", "/moradores"].some((path) => pathname.startsWith(path)) ? "text-pine" : "text-muted"}`}
+            >
+              <MoreHorizontal className="size-5" aria-hidden="true" />
+              Mais
+            </summary>
+            <div className="absolute right-2 bottom-full mb-2 w-60 rounded-xl border border-line bg-card p-2 shadow-lg">
+              {links
+                .filter((link) =>
+                  ["/veiculos", "/enquetes", "/financeiro", "/moradores"].includes(link.to),
+                )
+                .map((link) => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    className="flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-semibold hover:bg-moss"
+                  >
+                    <link.icon className="size-4 text-pine" aria-hidden="true" />
+                    {link.label}
+                  </Link>
+                ))}
+            </div>
+          </details>
         </nav>
       </div>
     </QuatiCtx.Provider>

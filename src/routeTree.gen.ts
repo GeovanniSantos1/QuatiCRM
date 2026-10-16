@@ -11,12 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as ChamadosRouteImport } from './routes/chamados'
 import { Route as EnquetesRouteImport } from './routes/enquetes'
 import { Route as EntregasRouteImport } from './routes/entregas'
 import { Route as FinanceiroRouteImport } from './routes/financeiro'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MoradoresRouteImport } from './routes/moradores'
 import { Route as PainelRouteImport } from './routes/painel'
+import { Route as ReservasRouteImport } from './routes/reservas'
 import { Route as VeiculosRouteImport } from './routes/veiculos'
 import { Route as AssinarTokenRouteImport } from './routes/assinar.$token'
 import { Route as ConviteTokenRouteImport } from './routes/convite.$token'
@@ -33,6 +35,11 @@ const IndexRoute = IndexRouteImport.update({
 const CadastroRoute = CadastroRouteImport.update({
   id: '/cadastro',
   path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChamadosRoute = ChamadosRouteImport.update({
+  id: '/chamados',
+  path: '/chamados',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnquetesRoute = EnquetesRouteImport.update({
@@ -63,6 +70,11 @@ const MoradoresRoute = MoradoresRouteImport.update({
 const PainelRoute = PainelRouteImport.update({
   id: '/painel',
   path: '/painel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReservasRoute = ReservasRouteImport.update({
+  id: '/reservas',
+  path: '/reservas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VeiculosRoute = VeiculosRouteImport.update({
@@ -104,12 +116,14 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
+  '/chamados': typeof ChamadosRoute
   '/enquetes': typeof EnquetesRouteWithChildren
   '/entregas': typeof EntregasRouteWithChildren
   '/financeiro': typeof FinanceiroRoute
   '/login': typeof LoginRoute
   '/moradores': typeof MoradoresRoute
   '/painel': typeof PainelRoute
+  '/reservas': typeof ReservasRoute
   '/veiculos': typeof VeiculosRoute
   '/assinar/$token': typeof AssinarTokenRoute
   '/convite/$token': typeof ConviteTokenRoute
@@ -121,12 +135,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
+  '/chamados': typeof ChamadosRoute
   '/enquetes': typeof EnquetesRouteWithChildren
   '/entregas': typeof EntregasRouteWithChildren
   '/financeiro': typeof FinanceiroRoute
   '/login': typeof LoginRoute
   '/moradores': typeof MoradoresRoute
   '/painel': typeof PainelRoute
+  '/reservas': typeof ReservasRoute
   '/veiculos': typeof VeiculosRoute
   '/assinar/$token': typeof AssinarTokenRoute
   '/convite/$token': typeof ConviteTokenRoute
@@ -139,12 +155,14 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
+  '/chamados': typeof ChamadosRoute
   '/enquetes': typeof EnquetesRouteWithChildren
   '/entregas': typeof EntregasRouteWithChildren
   '/financeiro': typeof FinanceiroRoute
   '/login': typeof LoginRoute
   '/moradores': typeof MoradoresRoute
   '/painel': typeof PainelRoute
+  '/reservas': typeof ReservasRoute
   '/veiculos': typeof VeiculosRoute
   '/assinar/$token': typeof AssinarTokenRoute
   '/convite/$token': typeof ConviteTokenRoute
@@ -158,12 +176,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/cadastro'
+    | '/chamados'
     | '/enquetes'
     | '/entregas'
     | '/financeiro'
     | '/login'
     | '/moradores'
     | '/painel'
+    | '/reservas'
     | '/veiculos'
     | '/assinar/$token'
     | '/convite/$token'
@@ -175,12 +195,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cadastro'
+    | '/chamados'
     | '/enquetes'
     | '/entregas'
     | '/financeiro'
     | '/login'
     | '/moradores'
     | '/painel'
+    | '/reservas'
     | '/veiculos'
     | '/assinar/$token'
     | '/convite/$token'
@@ -192,12 +214,14 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/cadastro'
+    | '/chamados'
     | '/enquetes'
     | '/entregas'
     | '/financeiro'
     | '/login'
     | '/moradores'
     | '/painel'
+    | '/reservas'
     | '/veiculos'
     | '/assinar/$token'
     | '/convite/$token'
@@ -210,12 +234,14 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CadastroRoute: typeof CadastroRoute
+  ChamadosRoute: typeof ChamadosRoute
   EnquetesRoute: typeof EnquetesRouteWithChildren
   EntregasRoute: typeof EntregasRouteWithChildren
   FinanceiroRoute: typeof FinanceiroRoute
   LoginRoute: typeof LoginRoute
   MoradoresRoute: typeof MoradoresRoute
   PainelRoute: typeof PainelRoute
+  ReservasRoute: typeof ReservasRoute
   VeiculosRoute: typeof VeiculosRoute
   AssinarTokenRoute: typeof AssinarTokenRoute
   ConviteTokenRoute: typeof ConviteTokenRoute
@@ -237,6 +263,13 @@ declare module '@tanstack/react-router' {
       path: '/cadastro'
       fullPath: '/cadastro'
       preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chamados': {
+      id: '/chamados'
+      path: '/chamados'
+      fullPath: '/chamados'
+      preLoaderRoute: typeof ChamadosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/enquetes': {
@@ -279,6 +312,13 @@ declare module '@tanstack/react-router' {
       path: '/painel'
       fullPath: '/painel'
       preLoaderRoute: typeof PainelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reservas': {
+      id: '/reservas'
+      path: '/reservas'
+      fullPath: '/reservas'
+      preLoaderRoute: typeof ReservasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/veiculos': {
@@ -360,12 +400,14 @@ const EntregasRouteWithChildren = EntregasRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CadastroRoute: CadastroRoute,
+  ChamadosRoute: ChamadosRoute,
   EnquetesRoute: EnquetesRouteWithChildren,
   EntregasRoute: EntregasRouteWithChildren,
   FinanceiroRoute: FinanceiroRoute,
   LoginRoute: LoginRoute,
   MoradoresRoute: MoradoresRoute,
   PainelRoute: PainelRoute,
+  ReservasRoute: ReservasRoute,
   VeiculosRoute: VeiculosRoute,
   AssinarTokenRoute: AssinarTokenRoute,
   ConviteTokenRoute: ConviteTokenRoute,

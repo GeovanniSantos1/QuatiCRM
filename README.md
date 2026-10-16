@@ -9,6 +9,8 @@ responsivo e acesso por perfil: morador, porteiro, administrador e síndico.
 - Convites para moradores cadastrados pela administração.
 - Veículos: solicitação, aprovação e consulta de placa pela portaria.
 - Um veículo pendente ou aprovado por apartamento.
+- Chamados com conversa privada, prioridade, andamento e histórico da solução.
+- Reservas de áreas comuns com aprovação e bloqueio de horários sobrepostos.
 - Gestão de pessoas, entregas, comunicados, votações e financeiro.
 - Login com e-mail e senha; integração Google/X pelo intermediário Grok,
   condicionada à configuração do cliente OAuth.
@@ -46,6 +48,7 @@ seus dados de demonstração não representam credenciais de produção.
 - `npm run build`
 - `npm run test:vehicles`
 - `npm run test:residents`
+- `npm run test:operations`
 
 Builds, dependências, capturas de tela, logs e configurações locais ficam fora
 do versionamento. Nenhuma credencial de banco ou token de publicação é necessária

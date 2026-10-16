@@ -10,6 +10,8 @@ import {
   Building2,
   CheckCheck,
   CarFront,
+  ClipboardList,
+  CalendarDays,
   Package,
   PieChart,
   Users,
@@ -137,7 +139,7 @@ function Painel() {
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4">
             <div>
               <h2 className="font-display text-2xl">Central de avisos</h2>
-              <p className="mt-0.5 text-xs text-muted">Atualizações de entregas e enquetes</p>
+              <p className="mt-0.5 text-xs text-muted">Entregas, enquetes, chamados e reservas</p>
             </div>
             <span className="rounded-md bg-paper px-2.5 py-1 text-xs font-semibold text-muted">
               {data.notifications.length} aviso{data.notifications.length === 1 ? "" : "s"}
@@ -150,7 +152,7 @@ function Painel() {
               </span>
               <h3 className="font-semibold">Tudo em dia por aqui</h3>
               <p className="mt-2 max-w-xs text-sm text-muted">
-                Quando houver novidades, seus avisos aparecerão aqui e no WhatsApp.
+                Quando houver novidades do condomínio, seus avisos aparecerão aqui.
               </p>
             </div>
           ) : (
@@ -197,6 +199,18 @@ function Painel() {
               title="Veículos"
               description="Cadastros e autorização de entrada"
               href="/veiculos"
+            />
+            <QuickLink
+              icon={ClipboardList}
+              title="Chamados"
+              description="Problemas, respostas e manutenção"
+              href="/chamados"
+            />
+            <QuickLink
+              icon={CalendarDays}
+              title="Reservas"
+              description="Agenda de áreas comuns"
+              href="/reservas"
             />
             <QuickLink
               icon={Vote}
