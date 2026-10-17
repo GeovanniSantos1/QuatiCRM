@@ -23,8 +23,8 @@ import { Route as VeiculosRouteImport } from './routes/veiculos'
 import { Route as AssinarTokenRouteImport } from './routes/assinar.$token'
 import { Route as AuthGoogleRouteImport } from './routes/auth/google'
 import { Route as ConviteTokenRouteImport } from './routes/convite.$token'
-import { Route as EnquetesIdRouteImport } from './routes/enquetes.$id'
-import { Route as EntregasIdRouteImport } from './routes/entregas.$id'
+import { Route as EnquetesIdRouteImport } from './routes/enquetes_.$id'
+import { Route as EntregasIdRouteImport } from './routes/entregas_.$id'
 import { Route as VotarTokenRouteImport } from './routes/votar.$token'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
@@ -99,14 +99,14 @@ const ConviteTokenRoute = ConviteTokenRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnquetesIdRoute = EnquetesIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => EnquetesRoute,
+  id: '/enquetes_/$id',
+  path: '/enquetes/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const EntregasIdRoute = EntregasIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => EntregasRoute,
+  id: '/entregas_/$id',
+  path: '/entregas/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const VotarTokenRoute = VotarTokenRouteImport.update({
   id: '/votar/$token',
@@ -123,8 +123,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/chamados': typeof ChamadosRoute
-  '/enquetes': typeof EnquetesRouteWithChildren
-  '/entregas': typeof EntregasRouteWithChildren
+  '/enquetes': typeof EnquetesRoute
+  '/entregas': typeof EntregasRoute
   '/financeiro': typeof FinanceiroRoute
   '/login': typeof LoginRoute
   '/moradores': typeof MoradoresRoute
@@ -143,8 +143,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/chamados': typeof ChamadosRoute
-  '/enquetes': typeof EnquetesRouteWithChildren
-  '/entregas': typeof EntregasRouteWithChildren
+  '/enquetes': typeof EnquetesRoute
+  '/entregas': typeof EntregasRoute
   '/financeiro': typeof FinanceiroRoute
   '/login': typeof LoginRoute
   '/moradores': typeof MoradoresRoute
@@ -164,8 +164,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/chamados': typeof ChamadosRoute
-  '/enquetes': typeof EnquetesRouteWithChildren
-  '/entregas': typeof EntregasRouteWithChildren
+  '/enquetes': typeof EnquetesRoute
+  '/entregas': typeof EntregasRoute
   '/financeiro': typeof FinanceiroRoute
   '/login': typeof LoginRoute
   '/moradores': typeof MoradoresRoute
@@ -175,8 +175,8 @@ export interface FileRoutesById {
   '/assinar/$token': typeof AssinarTokenRoute
   '/auth/google': typeof AuthGoogleRoute
   '/convite/$token': typeof ConviteTokenRoute
-  '/enquetes/$id': typeof EnquetesIdRoute
-  '/entregas/$id': typeof EntregasIdRoute
+  '/enquetes_/$id': typeof EnquetesIdRoute
+  '/entregas_/$id': typeof EntregasIdRoute
   '/votar/$token': typeof VotarTokenRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -237,8 +237,8 @@ export interface FileRouteTypes {
     | '/assinar/$token'
     | '/auth/google'
     | '/convite/$token'
-    | '/enquetes/$id'
-    | '/entregas/$id'
+    | '/enquetes_/$id'
+    | '/entregas_/$id'
     | '/votar/$token'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
@@ -247,8 +247,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CadastroRoute: typeof CadastroRoute
   ChamadosRoute: typeof ChamadosRoute
-  EnquetesRoute: typeof EnquetesRouteWithChildren
-  EntregasRoute: typeof EntregasRouteWithChildren
+  EnquetesRoute: typeof EnquetesRoute
+  EntregasRoute: typeof EntregasRoute
   FinanceiroRoute: typeof FinanceiroRoute
   LoginRoute: typeof LoginRoute
   MoradoresRoute: typeof MoradoresRoute
@@ -258,6 +258,8 @@ export interface RootRouteChildren {
   AssinarTokenRoute: typeof AssinarTokenRoute
   AuthGoogleRoute: typeof AuthGoogleRoute
   ConviteTokenRoute: typeof ConviteTokenRoute
+  EnquetesIdRoute: typeof EnquetesIdRoute
+  EntregasIdRoute: typeof EntregasIdRoute
   VotarTokenRoute: typeof VotarTokenRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -362,19 +364,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConviteTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/enquetes/$id': {
-      id: '/enquetes/$id'
-      path: '/$id'
+    '/enquetes_/$id': {
+      id: '/enquetes_/$id'
+      path: '/enquetes/$id'
       fullPath: '/enquetes/$id'
       preLoaderRoute: typeof EnquetesIdRouteImport
-      parentRoute: typeof EnquetesRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/entregas/$id': {
-      id: '/entregas/$id'
-      path: '/$id'
+    '/entregas_/$id': {
+      id: '/entregas_/$id'
+      path: '/entregas/$id'
       fullPath: '/entregas/$id'
       preLoaderRoute: typeof EntregasIdRouteImport
-      parentRoute: typeof EntregasRoute
+      parentRoute: typeof rootRouteImport
     }
     '/votar/$token': {
       id: '/votar/$token'
@@ -393,36 +395,12 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface EnquetesRouteChildren {
-  EnquetesIdRoute: typeof EnquetesIdRoute
-}
-
-const EnquetesRouteChildren: EnquetesRouteChildren = {
-  EnquetesIdRoute: EnquetesIdRoute,
-}
-
-const EnquetesRouteWithChildren = EnquetesRoute._addFileChildren(
-  EnquetesRouteChildren,
-)
-
-interface EntregasRouteChildren {
-  EntregasIdRoute: typeof EntregasIdRoute
-}
-
-const EntregasRouteChildren: EntregasRouteChildren = {
-  EntregasIdRoute: EntregasIdRoute,
-}
-
-const EntregasRouteWithChildren = EntregasRoute._addFileChildren(
-  EntregasRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CadastroRoute: CadastroRoute,
   ChamadosRoute: ChamadosRoute,
-  EnquetesRoute: EnquetesRouteWithChildren,
-  EntregasRoute: EntregasRouteWithChildren,
+  EnquetesRoute: EnquetesRoute,
+  EntregasRoute: EntregasRoute,
   FinanceiroRoute: FinanceiroRoute,
   LoginRoute: LoginRoute,
   MoradoresRoute: MoradoresRoute,
@@ -432,6 +410,8 @@ const rootRouteChildren: RootRouteChildren = {
   AssinarTokenRoute: AssinarTokenRoute,
   AuthGoogleRoute: AuthGoogleRoute,
   ConviteTokenRoute: ConviteTokenRoute,
+  EnquetesIdRoute: EnquetesIdRoute,
+  EntregasIdRoute: EntregasIdRoute,
   VotarTokenRoute: VotarTokenRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }

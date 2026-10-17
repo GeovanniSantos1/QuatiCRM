@@ -12,7 +12,7 @@ import {
 import { canRegisterDelivery } from "@/lib/condo/roles";
 import { errorText, formatWhen } from "@/lib/condo/format";
 
-export const Route = createFileRoute("/entregas/$id")({ component: Page });
+export const Route = createFileRoute("/entregas_/$id")({ component: Page });
 
 function Page() {
   const { id } = Route.useParams();
@@ -94,15 +94,26 @@ function Detail({ id }: { id: string }) {
       )}
       {error && <Notice tone="bad">{error}</Notice>}
       {item.signatureData ? (
-        <div className="rounded-3xl border border-line bg-card p-4">
-          <p className="text-sm font-semibold">Assinado por {item.signerName}</p>
+        <section
+          aria-label="Comprovante de assinatura"
+          className="rounded-3xl border border-line bg-card p-5"
+        >
+          <h2 className="font-display text-2xl">Assinatura do morador</h2>
+          <p className="mt-2 text-sm font-semibold">Assinado por {item.signerName}</p>
           <p className="text-xs text-muted">{formatWhen(item.signedAt)}</p>
           <img
             src={item.signatureData}
-            alt="Assinatura"
-            className="mt-3 h-32 w-full rounded-lg bg-signature-paper object-contain"
+            alt={`Assinatura de ${item.signerName}`}
+            className="mt-4 h-56 w-full rounded-xl border border-line bg-signature-paper object-contain"
           />
-        </div>
+          <a
+            href={item.signatureData}
+            download={`assinatura-${item.id}.png`}
+            className={`${btnGhost} mt-4`}
+          >
+            Baixar assinatura
+          </a>
+        </section>
       ) : item.mine ? (
         <form onSubmit={sign} className="space-y-3 rounded-3xl border border-line bg-card p-4">
           <h2 className="font-display text-2xl">Assinar retirada</h2>

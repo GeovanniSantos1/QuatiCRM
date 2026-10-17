@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { PollShareActions } from "@/components/poll-share-actions";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell, Notice, btnClay, btnGhost, useQuati } from "@/components/app-shell";
 import { closePoll, getPoll, voteInApp } from "@/lib/condo/api";
 import { canManagePolls } from "@/lib/condo/roles";
 import { errorText, formatWhen } from "@/lib/condo/format";
 
-export const Route = createFileRoute("/enquetes/$id")({ component: Page });
+export const Route = createFileRoute("/enquetes_/$id")({ component: Page });
 
 function Page() {
   const { id } = Route.useParams();
@@ -76,8 +77,17 @@ function Poll({ id }: { id: string }) {
       {pack.canVote ? (
         <form onSubmit={vote} className="space-y-2">
           {pack.options.map((option) => (
-            <label key={option.id} className="flex min-h-12 items-center gap-3 rounded-2xl border border-line bg-card px-4">
-              <input type="radio" name="option" value={option.id} checked={choice === option.id} onChange={() => setChoice(option.id)} />
+            <label
+              key={option.id}
+              className="flex min-h-12 items-center gap-3 rounded-2xl border border-line bg-card px-4"
+            >
+              <input
+                type="radio"
+                name="option"
+                value={option.id}
+                checked={choice === option.id}
+                onChange={() => setChoice(option.id)}
+              />
               <span>{option.label}</span>
             </label>
           ))}
@@ -122,18 +132,27 @@ function Poll({ id }: { id: string }) {
           Encerrar enquete
         </button>
       )}
+      {pack.share && <PollShareActions share={pack.share} />}
       {pack.ballots.length > 0 && (
         <section className="rounded-3xl border border-line bg-card p-4">
-          <h2 className="font-display text-2xl">WhatsApp dos moradores</h2>
+          <h2 className="font-display text-2xl">Links individuais dos moradores</h2>
           <ul className="mt-3 space-y-2">
             {pack.ballots.map((row) => (
-              <li key={row.unit + row.name} className="flex items-center justify-between gap-3 text-sm">
+              <li
+                key={row.unit + row.name}
+                className="flex items-center justify-between gap-3 text-sm"
+              >
                 <span>
                   {row.unit} · {row.name}
                   {row.voted ? " · votou" : ""}
                 </span>
                 {row.whatsappUrl ? (
-                  <a className="font-semibold text-pine" href={row.whatsappUrl} target="_blank" rel="noreferrer">
+                  <a
+                    className="font-semibold text-pine"
+                    href={row.whatsappUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     WhatsApp
                   </a>
                 ) : (

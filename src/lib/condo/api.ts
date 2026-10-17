@@ -11,6 +11,7 @@ import {
   type Role,
 } from "@/lib/condo/roles";
 import { deliveryMessage, firstName, pollMessage, waLink } from "@/lib/condo/format";
+import { pollShare } from "@/lib/condo/poll-sharing";
 import type { RegistrationStatus } from "@/lib/condo/membership-rules";
 import { normalizeUnit } from "@/lib/condo/vehicle-rules";
 
@@ -780,7 +781,7 @@ export const createPoll = createServerFn({ method: "POST" })
     }
     await ensureBallots(sql, id);
     const ballots = await dispatchRows(sql, id, data.title, origin);
-    return { id, ballots };
+    return { id, ballots, share: pollShare({ id, title: data.title, origin }) };
   });
 
 async function dispatchRows(sql: Sql, pollId: string, title: string, origin: string) {
@@ -867,6 +868,8 @@ export const getPoll = createServerFn({ method: "GET" })
       canVote:
         Boolean(mine[0]) && !mine[0].voted_at && Number(unitVoted[0]?.n ?? 0) === 0 && !closed,
       unitAlreadyVoted: Number(unitVoted[0]?.n ?? 0) > 0 && !mine[0]?.voted_at,
+      share: canManagePolls(profile.role) && origin && !closed
+        ? pollShare({ id: poll.id, title: poll.title, origin }) : null,
       ballots:
         canManagePolls(profile.role) && origin
           ? await dispatchRows(sql, poll.id, poll.title, origin)

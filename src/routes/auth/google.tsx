@@ -1,3 +1,4 @@
+import { loginDestination, loginContextQuery, pollIdFromSearch } from "@/lib/condo/poll-sharing";
 import { ThemeSelector } from "@/components/theme-selector";
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/auth/google")({
   component: GoogleLogin,
   loader: () => getSocialLoginConfiguration(),
   validateSearch: (search: Record<string, unknown>) => ({
+    enquete: pollIdFromSearch(search.enquete),
     etapa: ["retorno", "concluir", "verificar", "cadastro"].includes(String(search.etapa))
       ? String(search.etapa)
       : "iniciar",
@@ -50,6 +52,7 @@ const clerkAppearance = {
 };
 
 function GoogleLogin() {
+  const { convite, enquete } = Route.useSearch();
   const { clerkPublishableKey } = Route.useLoaderData();
   return (
     <main className="grid min-h-screen place-items-center bg-paper p-5">
@@ -57,6 +60,7 @@ function GoogleLogin() {
         <div className="mb-6 flex items-center justify-between gap-3">
           <Link
             to="/login"
+            search={{ convite, enquete }}
             className="inline-flex min-h-11 items-center gap-3 font-display text-2xl text-pine"
           >
             <QuatiMark className="size-10" /> Quati.
@@ -78,6 +82,7 @@ function GoogleLogin() {
         )}
         <Link
           to="/login"
+          search={{ convite, enquete }}
           className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-pine"
         >
           Voltar para o login
@@ -88,13 +93,14 @@ function GoogleLogin() {
 }
 
 function GoogleFlow() {
-  const { etapa, convite } = Route.useSearch();
+  const { etapa, convite, enquete } = Route.useSearch();
   const clerk = useClerk();
   const { isLoaded, isSignedIn, getToken } = useAuth();
   const { signIn } = useSignIn();
   const started = useRef(false);
   const [error, setError] = useState("");
-  const suffix = convite ? `&convite=${convite}` : "";
+  const query = loginContextQuery({ convite, enquete });
+  const suffix = query ? `&${query}` : "";
   const route = (step: string) => `/auth/google?etapa=${step}${suffix}`;
 
   useEffect(() => {
@@ -117,7 +123,7 @@ function GoogleFlow() {
         }
         // The CRM owns the resulting session. End the temporary identity-provider session
         // so a subsequent Google login can choose a different account.
-        await clerk.signOut({ redirectUrl: convite ? `/convite/${convite}` : "/painel" });
+        await clerk.signOut({ redirectUrl: loginDestination({ convite, enquete }) });
       } else {
         const result = await signIn.sso({
           strategy: "oauth_google",
@@ -130,7 +136,7 @@ function GoogleFlow() {
     })().catch((err: unknown) =>
       setError(err instanceof Error ? err.message : "Não foi possível entrar com Google."),
     );
-  }, [isLoaded, isSignedIn, getToken, signIn, clerk, etapa, convite]);
+  }, [isLoaded, isSignedIn, getToken, signIn, clerk, etapa, convite, enquete]);
 
   if (error)
     return (

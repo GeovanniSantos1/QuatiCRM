@@ -1,3 +1,4 @@
+import { loginDestination, loginContextQuery, pollIdFromSearch } from "@/lib/condo/poll-sharing";
 import { ThemeSelector } from "@/components/theme-selector";
 import { useState } from "react";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
@@ -13,7 +14,10 @@ import { getSocialLoginConfiguration } from "@/lib/condo/social-login";
 export const Route = createFileRoute("/login")({
   component: Login,
   loader: () => getSocialLoginConfiguration(),
-  validateSearch: (search: Record<string, unknown>): { convite?: string; cadastro?: boolean } => ({
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { convite?: string; cadastro?: boolean; enquete?: string } => ({
+    enquete: pollIdFromSearch(search.enquete),
     convite:
       typeof search.convite === "string" && /^[a-f0-9]{64}$/.test(search.convite)
         ? search.convite
@@ -27,7 +31,7 @@ function Login() {
   const router = useRouter();
   const search = Route.useSearch();
   const { appClientConfigured, clerkPublishableKey } = Route.useLoaderData();
-  const destination = search.convite ? `/convite/${search.convite}` : "/painel";
+  const destination = loginDestination(search);
   const [mode, setMode] = useState<"in" | "up">(search.cadastro ? "up" : "in");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -45,7 +49,7 @@ function Login() {
       !window.location.hostname.endsWith(".grok-sandbox.com")
     ) {
       window.location.assign(
-        search.convite ? `/auth/google?convite=${search.convite}` : "/auth/google",
+        `/auth/google${loginContextQuery(search) ? "?" + loginContextQuery(search) : ""}`,
       );
       return;
     }
@@ -77,6 +81,8 @@ function Login() {
       if (result.error) throw new Error(result.error.message || "Não foi possível entrar.");
       if (search.convite)
         await router.navigate({ to: "/convite/$token", params: { token: search.convite } });
+      else if (search.enquete)
+        await router.navigate({ to: "/enquetes/$id", params: { id: search.enquete } });
       else await router.navigate({ to: "/painel" });
     } catch (err) {
       setError(errorText(err));
